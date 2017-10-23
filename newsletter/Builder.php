@@ -72,6 +72,7 @@ class Builder{
 
     public function buildNewsletter(Row $user){
         $this->logger->debug("Building newsletter for '$user->display_name' (site: $user->site_id)", ['user_id' => $user->id]);
+        $site = $this->model->sites->get($user->site_id);
 
         // Fetch newsletter structure
         $structure = $this->api->getNewsletterStructure($user->id, $this->frequency);
@@ -79,7 +80,9 @@ class Builder{
         // Create newsletter
         $newsletter = new Newsletter($this->model);
         $newsletter
+            ->setSite($site)
             ->setUser($user)
+            ->setFrequency($this->frequency)
             ->setUnsubscribeLink($this->api->getUnsubscribeLink($user->id));
 
         // Fetch and add newsletter sections
@@ -97,6 +100,8 @@ class Builder{
 
         // Render newsletter HTML
         $file = $this->renderer->renderNewsletter($newsletter);
+
+        $this->logger->info("Rendered to: $file");
 
         // TODO Add to mail queue
     }

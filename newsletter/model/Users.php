@@ -6,6 +6,14 @@ namespace Newsletter\Model;
 class Users extends BaseModel{
     const TABLE = 'users';
 
+    public function get($id, $recurse = true){
+        $user = parent::get($id);
+        if($recurse){
+            $user->site = $this->model->sites->get($user->site_id);
+        }
+        return $user;
+    }
+
     /**
      * Returns users which are registered for a newsletter.
      * @param $frequency Newsletter frequency
