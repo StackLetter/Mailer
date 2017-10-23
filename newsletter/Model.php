@@ -36,4 +36,11 @@ class Model {
     public function __get($key){
         return $this->getModel($key);
     }
+
+    /**
+     * @return Manager
+     */
+    public function getDatabase(){
+        return $this->db;
+    }
 }

@@ -101,8 +101,8 @@ class Builder{
         $this->logger->debug("Populating newsletter content", ['user_id' => $user->id]);
         $newsletter->populateContent();
 
-
-        // TODO Persist newsletter in DB
+        // Persist newsletter in DB
+        $newsletter->persist();
 
         // TODO Render newsletter HTML
 
