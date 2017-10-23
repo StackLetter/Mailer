@@ -8,6 +8,7 @@ use Neevo\Row;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\SmartObject;
 use Newsletter\Model\User;
+use Newsletter\Utils\Api\ApiHelper;
 use Newsletter\Utils\Redis\RedisQueue;
 use Psr\Log\LoggerInterface;
 
@@ -31,6 +32,9 @@ class Builder{
     /** @var Latte\Engine */
     protected $latte;
 
+    /** @var ApiHelper */
+    protected $api;
+
     public function setLogger(LoggerInterface $logger){
         if($logger instanceof KdybyLogger){
             $logger = $logger->channel('builder');
@@ -44,6 +48,10 @@ class Builder{
 
     public function setLatteFactory(ILatteFactory $latte){
         $this->latte = $latte->create();
+    }
+
+    public function setApiHelper(ApiHelper $api){
+        $this->api = $api;
     }
 
     public function setFrequency($frequency){
@@ -75,6 +83,16 @@ class Builder{
 
     public function buildNewsletter(Row $user){
         $this->logger->debug("Building newsletter for $user->display_name (site: $user->site_id)", ['user_id' => $user->id]);
+
+        $structure = $this->api->getNewsletterStructure($user->id, $this->frequency);
+
+        $newsletter = new Newsletter($this->model);
+        $newsletter->setUserId($user->id);
+
+        foreach($structure as $section){
+            $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency);
+            $newsletter->addSection($section)->setContentIds($contentIds);
+        }
 
 
     }
