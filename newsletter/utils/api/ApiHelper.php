@@ -37,6 +37,10 @@ class ApiHelper{
     }
 
     public function getUnsubscribeLink($user_id){
-        return $this->getJson(sprintf($this->config['unsubscribe_endpoint'], $user_id));
+        $res = $this->getJson(sprintf($this->config['unsubscribe_endpoint'], $user_id));
+        if($res['status'] == 'success'){
+            return $res['link'];
+        }
+        return '#';
     }
 }

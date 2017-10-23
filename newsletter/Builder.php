@@ -89,7 +89,9 @@ class Builder{
 
         // Create newsletter
         $newsletter = new Newsletter($this->model);
-        $newsletter->setUserId($user->id);
+        $newsletter
+            ->setUser($user)
+            ->setUnsubscribeLink($this->api->getUnsubscribeLink($user->id));
 
         // Fetch and add newsletter sections
         foreach($structure as $section){

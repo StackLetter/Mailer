@@ -4,8 +4,13 @@ namespace Newsletter;
 
 use Neevo\Literal;
 use Neevo\NeevoException;
+use Neevo\Row;
 use Nette\SmartObject;
 
+/**
+ * @property Row $user
+ * @property string $unsubscribeLink
+ */
 class Newsletter{
     use SmartObject;
 
@@ -15,7 +20,11 @@ class Newsletter{
     /** @var Model */
     public $model;
 
-    private $user_id;
+    /** @var Row */
+    private $user;
+
+    /** @var string */
+    private $unsubscribeLink;
 
     /** @var NewsletterSection[] */
     private $sections = [];
@@ -24,8 +33,21 @@ class Newsletter{
         $this->model = $model;
     }
 
-    public function setUserId($user_id){
-        $this->user_id = $user_id;
+    public function getUser(){
+        return $this->user;
+    }
+
+    public function setUser(Row $user){
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getUnsubscribeLink(){
+        return $this->unsubscribeLink;
+    }
+
+    public function setUnsubscribeLink($link){
+        return $this->unsubscribeLink = $link;
         return $this;
     }
 
@@ -49,7 +71,7 @@ class Newsletter{
         $db->begin();
         try{
             $newsletter_id = $db->insert(static::TABLE, [
-                'user_id' => $this->user_id,
+                'user_id' => $this->user->id,
                 'created_at' => new Literal('NOW()'),
                 'updated_at' => new Literal('NOW()'),
             ])->insertId();
@@ -60,7 +82,7 @@ class Newsletter{
                     'name' => $sec->name,
                     'content_type' => $sec->content_type,
                     'description' => $sec->description,
-                    'content_ids' => new Literal("{" . join(',', $sec->getContentIds()) . "}"),
+                    'content_ids' => "{" . join(',', $sec->getContentIds()) . "}",
                     'created_at' => new Literal('NOW()'),
                     'updated_at' => new Literal('NOW()'),
                 ])->run();
