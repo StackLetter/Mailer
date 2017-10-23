@@ -11,6 +11,8 @@ class Newsletter{
     public $model;
 
     private $user_id;
+
+    /** @var NewsletterSection[] */
     private $sections = [];
 
     public function __construct(Model $model){
@@ -28,7 +30,12 @@ class Newsletter{
         return $new;
     }
 
-
-
+    public function populateContent(){
+        foreach($this->sections as $section){
+            foreach($section->getContentIds() as $id){
+                $section->addContent($this->model->{$section->type . 's'}->get($id));
+            }
+        }
+    }
 
 }

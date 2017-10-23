@@ -2,9 +2,10 @@
 
 namespace Newsletter;
 
+use Neevo\Row;
 use Nette\SmartObject;
 
-class NewsletterSection {
+class NewsletterSection implements \IteratorAggregate {
     use SmartObject;
 
     /** @var Newsletter */
@@ -13,13 +14,35 @@ class NewsletterSection {
     private $definition;
     private $contentIds;
 
-    public function __construct(Newsletter $newsletter, array $def){
+    /** @var Row[] */
+    private $content = [];
+
+    public function __construct(Newsletter $newsletter, array $definition){
         $this->newsletter = $newsletter;
-        $this->definition = $def;
+        $this->definition = $definition;
+    }
+
+    public function getContentIds(){
+        return $this->contentIds;
     }
 
     public function setContentIds(array $ids){
         $this->contentIds = $ids;
     }
 
+    public function getDefinition(){
+        return $this->definition;
+    }
+
+    public function addContent(Row $row){
+        $this->content[] = $row;
+    }
+
+    public function __get($key){
+        return $this->definition[$key] ?? null;
+    }
+
+    public function getIterator(){
+        return new \ArrayIterator($this->content);
+    }
 }

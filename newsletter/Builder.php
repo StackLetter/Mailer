@@ -7,7 +7,7 @@ use Latte;
 use Neevo\Row;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\SmartObject;
-use Newsletter\Model\User;
+use Newsletter\Model\Users;
 use Newsletter\Utils\Api\ApiHelper;
 use Newsletter\Utils\Redis\RedisQueue;
 use Psr\Log\LoggerInterface;
@@ -66,7 +66,7 @@ class Builder{
 
 
     protected function getUsers(){
-        return $this->model->user->getRegistered($this->frequency);
+        return $this->model->users->getRegistered($this->frequency);
     }
 
     public function build(){
@@ -82,18 +82,32 @@ class Builder{
     }
 
     public function buildNewsletter(Row $user){
-        $this->logger->debug("Building newsletter for $user->display_name (site: $user->site_id)", ['user_id' => $user->id]);
+        $this->logger->debug("Building newsletter for '$user->display_name' (site: $user->site_id)", ['user_id' => $user->id]);
 
+        // Fetch newsletter structure
         $structure = $this->api->getNewsletterStructure($user->id, $this->frequency);
 
+        // Create newsletter
         $newsletter = new Newsletter($this->model);
         $newsletter->setUserId($user->id);
 
+        // Fetch and add newsletter sections
         foreach($structure as $section){
             $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency);
             $newsletter->addSection($section)->setContentIds($contentIds);
         }
 
+        // Populate newsletter sections with content from DB
+        $this->logger->debug("Populating newsletter content", ['user_id' => $user->id]);
+        $newsletter->populateContent();
 
+
+        // TODO Persist newsletter in DB
+
+        // TODO Render newsletter HTML
+
+        // TODO Save HTML output
+
+        // TODO Add to mail queue
     }
 }
