@@ -1,0 +1,24 @@
+extensions:
+    neevo: Neevo\Nette\Extension
+    monolog: Kdyby\Monolog\DI\MonologExtension
+    redis: Newsletter\Utils\Redis\DIExtension
+    api: Newsletter\Utils\Api\DIExtension
+
+
+services:
+    model: Newsletter\Model
+
+    builder:
+        factory: Newsletter\Builder
+        setup:
+            - setLogger()
+            - setRedisQueue()
+            - setLatteFactory()
+
+
+api:
+    http:   # Default options for Guzzle HTTP requests
+        headers:
+            User-Agent: 'StackLetter-Builder/1.0'
+            Accept: 'application/json'
+        http_errors: false
