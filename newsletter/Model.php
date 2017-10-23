@@ -3,10 +3,14 @@
 namespace Newsletter;
 
 use Neevo\Manager;
-use Newsletter\Model\User;
+use Newsletter\Model\Answers;
+use Newsletter\Model\Questions;
+use Newsletter\Model\Users;
 
 /**
- * @property-read User $user
+ * @property-read Users $users
+ * @property-read Questions $questions
+ * @property-read Answers $answers
  */
 class Model {
 

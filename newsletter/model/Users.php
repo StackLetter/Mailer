@@ -3,7 +3,7 @@
 namespace Newsletter\Model;
 
 
-class User extends BaseModel{
+class Users extends BaseModel{
     const TABLE = 'users';
 
     /**
