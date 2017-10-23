@@ -5,9 +5,7 @@ namespace Newsletter;
 use Kdyby\Monolog\Logger as KdybyLogger;
 use Latte;
 use Neevo\Row;
-use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\SmartObject;
-use Newsletter\Model\Users;
 use Newsletter\Utils\Api\ApiHelper;
 use Newsletter\Utils\Redis\RedisQueue;
 use Psr\Log\LoggerInterface;
@@ -16,7 +14,6 @@ class Builder{
     use SmartObject;
 
     protected $frequency;
-    protected $templateDir;
     protected $model;
 
     public function __construct(Model $model){
@@ -29,38 +26,30 @@ class Builder{
     /** @var RedisQueue */
     protected $queue;
 
-    /** @var Latte\Engine */
-    protected $latte;
-
     /** @var ApiHelper */
     protected $api;
 
+    /** @var Renderer */
+    protected $renderer;
+
     public function setLogger(LoggerInterface $logger){
-        if($logger instanceof KdybyLogger){
-            $logger = $logger->channel('builder');
-        }
-        $this->logger = $logger;
+        $this->logger = $logger instanceof KdybyLogger ? $logger->channel('builder') : $logger;
     }
 
     public function setRedisQueue(RedisQueue $queue){
         $this->queue = $queue;
     }
 
-    public function setLatteFactory(ILatteFactory $latte){
-        $this->latte = $latte->create();
-    }
-
     public function setApiHelper(ApiHelper $api){
         $this->api = $api;
     }
 
-    public function setFrequency($frequency){
-        $this->frequency = $frequency;
-        return $this;
+    public function setRenderer(Renderer $renderer){
+        $this->renderer = $renderer;
     }
 
-    public function setTemplateDir($dir){
-        $this->templateDir = $dir;
+    public function setFrequency($frequency){
+        $this->frequency = $frequency;
         return $this;
     }
 
@@ -106,9 +95,8 @@ class Builder{
         // Persist newsletter in DB
         $newsletter->persist();
 
-        // TODO Render newsletter HTML
-
-        // TODO Save HTML output
+        // Render newsletter HTML
+        $file = $this->renderer->renderNewsletter($newsletter);
 
         // TODO Add to mail queue
     }

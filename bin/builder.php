@@ -10,6 +10,5 @@ $builder = $container->getByType(Newsletter\Builder::class);
 $frequency = 'w';
 
 $builder
-    ->setTemplateDir(__DIR__ . '/../templates')
     ->setFrequency($frequency)
     ->build();

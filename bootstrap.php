@@ -16,6 +16,8 @@ $configurator->setDebugMode(true);
 $configurator->enableTracy(__DIR__ . '/log');
 $configurator->setTempDirectory(__DIR__ . '/tmp');
 
+$configurator->addParameters(['templateDir' => __DIR__ . '/templates']);
+
 $configurator->createRobotLoader()
              ->addDirectory(__DIR__)
              ->register();

@@ -8,13 +8,15 @@ extensions:
 services:
     model: Newsletter\Model
 
+    renderer: Newsletter\Renderer(%templateDir%)
+
     builder:
         factory: Newsletter\Builder
         setup:
             - setLogger()
             - setRedisQueue()
-            - setLatteFactory()
             - setApiHelper()
+            - setRenderer()
 
 
 api:
