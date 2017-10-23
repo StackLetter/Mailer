@@ -12,11 +12,13 @@ class Questions extends BaseModel{
             return false;
         }
         $question->answer_count = $this->model->answers->getAll()->where('question_id', $id)->count('id');
-        $question->user = $this->model->users->get($question->owner_id);
+        $question->user = $this->model->users->get($question->owner_id, false);
 
-        if($recurse && $question->accepted_answer_id !== NULL){
-            $question->accepted_answer = $this->model->answers->get($question->accepted_answer_id, false);
+        if($recurse){
             $question->tags = $this->model->tags->getQuestionTags($question->id);
+            if($question->accepted_answer_id !== NULL){
+                $question->accepted_answer = $this->model->answers->get($question->accepted_answer_id, false);
+            }
         }
         return $question;
     }

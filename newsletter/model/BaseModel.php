@@ -6,6 +6,9 @@ use Neevo\Manager;
 use Nette\SmartObject;
 use Newsletter\Model;
 
+/**
+ * @todo Consider using nette/database to optimize queries
+ */
 class BaseModel {
     use SmartObject;
 
