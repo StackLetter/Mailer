@@ -1,5 +1,6 @@
 {
     "require": {
+        "php": ">= 7.0",
         "nette/bootstrap": "^2.4",
         "nette/robot-loader": "^3.0",
         "nette/caching": "^2.5",
