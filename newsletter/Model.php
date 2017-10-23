@@ -6,11 +6,13 @@ use Neevo\Manager;
 use Newsletter\Model\Answers;
 use Newsletter\Model\Questions;
 use Newsletter\Model\Users;
+use Newsletter\Model\Tags;
 
 /**
  * @property-read Users $users
  * @property-read Questions $questions
  * @property-read Answers $answers
+ * @property-read Tags $tags
  */
 class Model {
 
@@ -29,7 +31,7 @@ class Model {
         if(isset($this->models[$name])){
             return $this->models[$name];
         }
-        return $this->models[$name] = new $class($this->db);
+        return $this->models[$name] = new $class($this->db, $this);
     }
 
 

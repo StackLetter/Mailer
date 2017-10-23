@@ -4,6 +4,7 @@ namespace Newsletter\Model;
 
 use Neevo\Manager;
 use Nette\SmartObject;
+use Newsletter\Model;
 
 class BaseModel {
     use SmartObject;
@@ -11,8 +12,12 @@ class BaseModel {
     /** @var Manager */
     protected $db;
 
-    public function __construct(Manager $db){
+    /** @var Model */
+    protected $model;
+
+    public function __construct(Manager $db, Model $model){
         $this->db = $db;
+        $this->model = $model;
     }
 
     public function get($id){
