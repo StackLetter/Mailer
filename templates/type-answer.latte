@@ -14,8 +14,8 @@
                 Asked by <a href="{$content->question->user|url:'user'}" style="color: #418FA4;text-decoration: underline;">{$content->question->user->display_name}</a>
             </td>
             <td style="vertical-align: middle;width: 40px;text-align: right;">
-                <a href="{$content|feedbackUrl:'answer',1}" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" src="assets/like.png"></a>
-                <a href="{$content|feedbackUrl:'answer',-1}" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" src="assets/dislike.png"></a>
+                <a href="{$content|feedbackUrl:'answer',1}" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" alt="like" src="assets/like.png"></a>
+                <a href="{$content|feedbackUrl:'answer',-1}" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" alt="dislike" src="assets/dislike.png"></a>
             </td>
         </tr>
     </table>

@@ -22,7 +22,15 @@ class RedisQueue{
     }
 
     public function dequeue(){
-        list($res, $data) = $this->client->rpop($this->queue);
+         return $this->decode($this->client->rpop($this->queue));
+    }
+
+    public function waitFor(){
+        return $this->decode($this->client->brpop($this->queue, 0));
+    }
+
+    private function decode($result){
+        list($res, $data) = $result;
         if($data){
             return json_decode($data, true);
         }

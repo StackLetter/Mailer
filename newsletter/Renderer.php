@@ -37,7 +37,10 @@ class Renderer{
     public function renderNewsletter(Newsletter $newsletter){
         $this->newsletter = $newsletter;
         $html = $this->latte->renderToString($this->templateDir . '/newsletter.latte', ['newsletter' => $newsletter]);
-        $filename = sprintf("%s/newsletter--%s--%s.html", $this->outputDir, date('Y-m-d--H-i-s'), substr(sha1($html), 0, 10));
+        $filename = sprintf("%s/%s_newsletter_%d_%s.html", $this->outputDir, date('Y-m-d/H-i-s'), $newsletter->id, substr(sha1($html), 0, 10));
+        if(!file_exists(dirname($filename))){
+            mkdir(dirname($filename), 0777, true);
+        }
         file_put_contents($filename, $html);
         return $filename;
     }
@@ -100,7 +103,7 @@ class Renderer{
             'newsletter_id' => $this->newsletter->id,
             'user_response_type' => $evalType,
             'content_type' => $contentType,
-            'redirect_to' => urlencode($redirect),
+            'redirect_to' => $redirect,
             'event_identifier' => uniqid('event_', true)
         ]);
         if($evalDetail !== null){

@@ -101,8 +101,18 @@ class Builder{
         // Render newsletter HTML
         $file = $this->renderer->renderNewsletter($newsletter);
 
-        $this->logger->info("Rendered to: $file");
+        $this->logger->debug("Rendered to: $file");
 
-        // TODO Add to mail queue
+        // Add to mail queue
+        $this->queue->enqueue([
+            'job' => 'stackletter.mail.newsletter',
+            'params' => [
+                'newsletter_id' => $newsletter->id,
+                'email' => $user->email,
+                'unsubscribe' => $newsletter->unsubscribeLink,
+                'file' => $file,
+            ],
+        ]);
+        $this->logger->debug("Mail queued", ['user_id' => $user->id]);
     }
 }
