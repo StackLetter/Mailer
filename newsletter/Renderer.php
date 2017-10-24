@@ -85,8 +85,13 @@ class Renderer{
     }
 
     public function filterFeedbackUrl($entity, $type, $value){
-        $redirectUrl = 'https://static.stackletter.com/thankyou/';
+        $redirectUrl = 'https://www.stackletter.com/subscription/thankyou';
         return $this->constructEvaluationUrl('feedback', $type, $redirectUrl, $value, $entity->id);
+    }
+
+    public function filterTrackingPixel($newsletter){
+        $redirectUrl = 'https://www.stackletter.com/assets/1x1.gif';
+        return $this->constructEvaluationUrl('open', 'newsletter', $redirectUrl);
     }
 
     private function constructEvaluationUrl($evalType, $contentType, $redirect, $evalDetail = null, $contentDetail = null){
