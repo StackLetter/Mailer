@@ -1,6 +1,7 @@
-.idea
-vendor
-tmp
-log
+.idea/
+vendor/
+tmp/
+log/
+mail-queue/
 config/local.neon
 

@@ -9,28 +9,44 @@ use Nette\SmartObject;
 
 /**
  * @property Row $user
+ * @property Row $site
  * @property string $unsubscribeLink
+ * @property string $frequency
  */
-class Newsletter{
+class Newsletter implements \IteratorAggregate{
     use SmartObject;
 
     const TABLE = 'newsletters';
-    const SECTION_TABLE = 'newsletter_sections';
+    const TABLE_SECTION = 'newsletter_sections';
 
     /** @var Model */
     public $model;
 
+    public $id;
+
     /** @var Row */
     private $user;
 
-    /** @var string */
+    /** @var Row */
+    private $site;
+
     private $unsubscribeLink;
+    private $frequency;
 
     /** @var NewsletterSection[] */
     private $sections = [];
 
     public function __construct(Model $model){
         $this->model = $model;
+    }
+
+    public function getSite(){
+        return $this->site;
+    }
+
+    public function setSite(Row $site){
+        $this->site = $site;
+        return $this;
     }
 
     public function getUser(){
@@ -47,7 +63,16 @@ class Newsletter{
     }
 
     public function setUnsubscribeLink($link){
-        return $this->unsubscribeLink = $link;
+        $this->unsubscribeLink = $link;
+        return $this;
+    }
+
+    public function getFrequency(){
+        return $this->frequency == 'd' ? 'Daily' : 'Weekly';
+    }
+
+    public function setFrequency($freq){
+        $this->frequency = $freq;
         return $this;
     }
 
@@ -55,6 +80,10 @@ class Newsletter{
         $new = new NewsletterSection($this, $section);
         $this->sections[] = $new;
         return $new;
+    }
+
+    public function getIterator(){
+        return new \ArrayIterator($this->sections);
     }
 
     public function populateContent(){
@@ -76,8 +105,10 @@ class Newsletter{
                 'updated_at' => new Literal('NOW()'),
             ])->insertId();
 
+            $this->id = $newsletter_id;
+
             foreach($this->sections as $sec){
-                $db->insert(static::SECTION_TABLE, [
+                $db->insert(static::TABLE_SECTION, [
                     'newsletter_id' => $newsletter_id,
                     'name' => $sec->name,
                     'content_type' => $sec->content_type,

@@ -8,7 +8,7 @@ extensions:
 services:
     model: Newsletter\Model
 
-    renderer: Newsletter\Renderer(%templateDir%)
+    renderer: Newsletter\Renderer(%templateDir%, %outputDir%)
 
     builder:
         factory: Newsletter\Builder

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>StackLetter {$newsletter->site->name} {$newsletter->frequency} Newsletter ({date('d.m.Y')})</title>
+</head>
+<body>
+    <div style="max-width: 600px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
+        <table style="background: #418FA4 url(assets/header-bg.png) no-repeat 0 0;height: 90px;width: 100%;">
+            <tr>
+                <td><img src="assets/logo.png" alt="" height="75" style="vertical-align: middle;padding: 0 5px 0 20px;"></td>
+                <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0;">StackLetter &ndash; {$newsletter->site->name}</td>
+            </tr>
+        </table>
+        <div>
+            {foreach $newsletter as $section}
+                {include 'section.latte', section => $section}
+            {/foreach}
+        </div>
+        <div style="border-top: 3px solid #eee;padding: 5px 10px;">
+            <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
+                <b>StackLetter</b> &ndash; Personalized Stack Exchange newsletters.
+                | <a href="mailto:info@stackletter.com" style="color: #418FA4;text-decoration: underline;">info@stackletter.com</a>
+            </p>
+            <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
+                You received this e-mail because you subscribed to StackLetter {$newsletter->frequency} {$newsletter->site->name} newsletter.
+                <a href="{$newsletter->unsubscribeLink}" style="color: #418FA4;text-decoration: underline;">Unsubscribe</a>.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

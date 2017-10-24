@@ -1,0 +1,19 @@
+<div style="border-bottom: 2px solid #eee;padding: 20px 0 0;">
+    <table style="width: 100%;">
+        <tr>
+            <td style="padding:0 0 0 15px">
+                <h2 style="font-weight: 400;font-size: 19px;margin: 0;color: #444;">{$section->name}</h2>
+                <p style="margin: 0;font-weight: 400;color: #444;font-style: italic;padding: 5px 0;">{$section->description}</p>
+            </td>
+            <td style="text-align: center;width: 100px;">
+                <span style="color: #444;font-size: 12px;display: block;padding-bottom: 5px;">Rate this section</span>
+                <a href="#" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="" title="This section is irrelevant."></a>
+                <a href="#" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="" title="This section is somewhat relevant."></a>
+                <a href="#" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="" title="This section is great."></a>
+            </td>
+        </tr>
+    </table>
+    {foreach $section as $content}
+        {include 'type-' . $section->content_type . '.latte', content => $content}
+    {/foreach}
+</div>
