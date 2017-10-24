@@ -18,6 +18,13 @@ services:
             - setApiHelper()
             - setRenderer()
 
+    mailer:
+        factory: Newsletter\Mailer(%mail%, %templateDir%)
+        setup:
+            - setLogger()
+            - setRedisQueue()
+            - setMailer()
+
 
 api:
     http:   # Default options for Guzzle HTTP requests
@@ -25,3 +32,8 @@ api:
             User-Agent: 'StackLetter-Builder/1.0'
             Accept: 'application/json'
         http_errors: false
+
+
+parameters:
+    mail:
+        xmailer: 'StackLetter-Mailer/1.0'
