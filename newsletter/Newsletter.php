@@ -108,7 +108,7 @@ class Newsletter implements \IteratorAggregate{
             $this->id = $newsletter_id;
 
             foreach($this->sections as $sec){
-                $db->insert(static::TABLE_SECTION, [
+                $sec->id = $db->insert(static::TABLE_SECTION, [
                     'newsletter_id' => $newsletter_id,
                     'name' => $sec->name,
                     'content_type' => $sec->content_type,
@@ -116,7 +116,7 @@ class Newsletter implements \IteratorAggregate{
                     'content_ids' => "{" . join(',', $sec->getContentIds()) . "}",
                     'created_at' => new Literal('NOW()'),
                     'updated_at' => new Literal('NOW()'),
-                ])->run();
+                ])->insertId();
             }
         } catch(NeevoException $e){
             $db->rollback();

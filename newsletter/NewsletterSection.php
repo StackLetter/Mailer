@@ -17,6 +17,8 @@ class NewsletterSection implements \IteratorAggregate {
     /** @var Row[] */
     private $content = [];
 
+    public $id;
+
     public function __construct(Newsletter $newsletter, array $definition){
         $this->newsletter = $newsletter;
         $this->definition = $definition;
