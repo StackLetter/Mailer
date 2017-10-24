@@ -1,6 +1,6 @@
 <div style="border-bottom: 1px dotted #ccc;padding: 20px 20px 10px;font-size: 13px;">
     <h3 style="margin: 0;font-weight: 600;font-size: 16px;color: #222;">{$content->question->title|striptags}
-    &ndash; <a href="#answer={$content->external_id}" style="color: #418FA4;text-decoration: underline;">Answer{if $content->user} by {$content->user->display_name}{/if}</a>:</h3>
+    &ndash; <a href="{$content|url:'answer'}" style="color: #418FA4;text-decoration: underline;">Answer{if $content->user} by {$content->user->display_name}{/if}</a>:</h3>
 
     <p style="margin: 1em 0;font-weight: 400;color: #444;">
         {$content->body|striptags|truncate:300}
@@ -11,11 +11,11 @@
                 <span>{$content->score} votes</span>
             </td>
             <td n:inner-if="$content->question->user" style="vertical-align: middle;font-size: 12px;width: 170px;color: #777;">
-                Asked by <a href="#{$content->question->user->external_id}" style="color: #418FA4;text-decoration: underline;">{$content->question->user->display_name}</a>
+                Asked by <a href="{$content->question->user|url:'user'}" style="color: #418FA4;text-decoration: underline;">{$content->question->user->display_name}</a>
             </td>
             <td style="vertical-align: middle;width: 40px;text-align: right;">
-                <a href="#" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" src="assets/like.png"></a>
-                <a href="#" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" src="assets/dislike.png"></a>
+                <a href="{$content|feedbackUrl:'answer',1}" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" src="assets/like.png"></a>
+                <a href="{$content|feedbackUrl:'answer',-1}" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" src="assets/dislike.png"></a>
             </td>
         </tr>
     </table>

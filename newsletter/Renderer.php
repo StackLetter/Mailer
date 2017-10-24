@@ -5,6 +5,7 @@ namespace Newsletter;
 use Kdyby\Monolog\Logger as KdybyLogger;
 use Latte\Engine;
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
+use Nette\Http\Url;
 use Psr\Log\LoggerInterface;
 
 class Renderer{
@@ -21,18 +22,89 @@ class Renderer{
     /** @var LoggerInterface */
     private $logger;
 
+    /** @var Newsletter */
+    private $newsletter;
+
 
     public function __construct(string $templateDir, string $tempDir, ILatteFactory $latteFactory, LoggerInterface $logger){
         $this->templateDir = $templateDir;
         $this->outputDir = $tempDir;
         $this->latte = $latteFactory->create();
+        $this->registerFilters();
         $this->logger = $logger instanceof KdybyLogger ? $logger->channel('renderer') : $logger;
     }
 
     public function renderNewsletter(Newsletter $newsletter){
+        $this->newsletter = $newsletter;
         $html = $this->latte->renderToString($this->templateDir . '/newsletter.latte', ['newsletter' => $newsletter]);
         $filename = sprintf("%s/newsletter--%s--%s.html", $this->outputDir, date('Y-m-d--H-i-s'), substr(sha1($html), 0, 10));
         file_put_contents($filename, $html);
         return $filename;
+    }
+
+    private function registerFilters(){
+        $this->latte->addFilter(null, [$this, 'filterHandler']);
+    }
+
+    public function filterHandler($filter, $value){
+        $method = 'filter' . ucfirst($filter);
+        if(method_exists($this, $method)){
+            $args = func_get_args();
+            array_shift($args);
+            return call_user_func_array([$this, $method], $args);
+        }
+        return $value;
+    }
+
+    public function filterUrl($entity, $type, $evaluation = true){
+        $site = $this->newsletter->site;
+        // TODO: remove fallback to SE when DB is populated with URLs
+        $baseUrl = isset($site->url) ? rtrim($site->url, '/') : 'https://softwareengineering.stackexchange.com';
+
+        // TODO: add more entity types (badge, user_badge, comment)
+        switch($type){
+            case 'question':
+                $res = "$baseUrl/q/$entity->external_id"; break;
+            case 'answer':
+                $res = "$baseUrl/a/$entity->external_id"; break;
+            case 'user':
+                $res = "$baseUrl/u/$entity->external_id"; break;
+            case 'tag':
+                $res = "$baseUrl/questions/tagged/$entity->name"; break;
+            default:
+                $res = '#';
+        }
+        if($evaluation && $res !== '#'){
+            $res = $this->constructEvaluationUrl('click', $type, $res, null, $entity->id);
+        }
+        return $res;
+    }
+
+    public function filterUnsubscribeUrl($link){
+        return $this->constructEvaluationUrl('unsubscribe', 'newsletter', $link);
+    }
+
+    public function filterFeedbackUrl($entity, $type, $value){
+        $redirectUrl = 'https://static.stackletter.com/thankyou/';
+        return $this->constructEvaluationUrl('feedback', $type, $redirectUrl, $value, $entity->id);
+    }
+
+    private function constructEvaluationUrl($evalType, $contentType, $redirect, $evalDetail = null, $contentDetail = null){
+        $url = new Url('https://api.stackletter.com/evaluation/');
+        $url->appendQuery([
+            'newsletter_id' => $this->newsletter->id,
+            'user_response_type' => $evalType,
+            'content_type' => $contentType,
+            'redirect_to' => urlencode($redirect),
+            'event_identifier' => uniqid('event_', true)
+        ]);
+        if($evalDetail !== null){
+            $url->appendQuery(['user_response_detail' => $evalDetail]);
+        }
+        if($contentDetail !== null){
+            $url->appendQuery(['content_detail' => $contentDetail]);
+        }
+
+        return (string) $url;
     }
 }
