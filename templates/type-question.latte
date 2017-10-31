@@ -1,21 +1,21 @@
 <div style="border-top: 1px dotted #ccc;padding: 20px 20px 10px;font-size: 13px;">
-    <h3 style="margin: 0;font-weight: 600;font-size: 16px;"><a href="{$content|url:'question'}" style="color: #418FA4;text-decoration: underline;">{$content->title|striptags}</a></h3>
+    <h3 style="margin: 0;font-weight: 600;font-size: 16px;"><a href="{$content|url:'question'}" style="color: #07c;text-decoration: underline;">{$content->title|striptags}</a></h3>
     <p style="margin: 1em 0;font-weight: 400;color: #444;">
         {$content->body|striptags|truncate:300}
     </p>
     <table style="width: 100%;">
         <tr>
             <td style="vertical-align: top;line-height:26px;font-size: 12px;" n:inner-foreach="$content->tags as $tag">
-                <a href="{$tag|url:'tag'}" style="color: #418FA4;text-decoration: none;background: #e5e5e5;padding: 3px;border: 1px solid #A3C8D3;border-width: 0 1px 1px 0;">{$tag->name}</a>
+                <a href="{$tag|url:'tag'}" style="color: #07c;text-decoration: none;background: #e5e5e5;padding: 3px;border: 1px solid #A3C8D3;border-width: 0 1px 1px 0;">{$tag->name}</a>
             </td>
             <td style="vertical-align: top;font-size: 12px;width: 170px;color: #777;">
                 {if $content->user}
-                Asked by <a href="{$content->user|url:'user'}" style="color: #418FA4;text-decoration: underline;">{$content->user->display_name}</a><br>
+                Asked by <a href="{$content->user|url:'user'}" style="color: #07c;text-decoration: underline;">{$content->user->display_name}</a><br>
                 {/if}
                 {if isset($content->accepted_answer)}
                     Answered
                     {if $content->accepted_answer->user}
-                        by <a href="{$content->accepted_answer->user|url:'user'}" style="color: #418FA4;text-decoration: underline;">{$content->accepted_answer->user->display_name}</a>
+                        by <a href="{$content->accepted_answer->user|url:'user'}" style="color: #07c;text-decoration: underline;">{$content->accepted_answer->user->display_name}</a>
                     {/if}
                 {elseif $content->answer_count != 0}
                     {$content->answer_count} answers
@@ -24,8 +24,8 @@
                 {/if}
             </td>
             <td style="vertical-align: middle;width: 40px;text-align: right;">
-                <a href="{$content|feedbackUrl:'question',1}" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" alt="like" src="assets/like.png"></a>
-                <a href="{$content|feedbackUrl:'question',-1}" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" alt="dislike" src="assets/dislike.png"></a>
+                <a href="{$content|feedbackUrl:'question',1}" style="color: #07c;text-decoration: underline;"><img title="I liked this suggestion" alt="like" src="assets/like.png"></a>
+                <a href="{$content|feedbackUrl:'question',-1}" style="color: #07c;text-decoration: underline;"><img title="I did not like this suggestion" alt="dislike" src="assets/dislike.png"></a>
             </td>
         </tr>
     </table>

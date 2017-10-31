@@ -1,6 +1,7 @@
 <div style="border-top: 1px dotted #ccc;padding: 20px 20px 10px;font-size: 13px;">
-    <h3 style="margin: 0;font-weight: 600;font-size: 16px;color: #444;">{$content->question->title|striptags}
-    &ndash; <a href="{$content|url:'answer'}" style="color: #418FA4;text-decoration: underline;">Answer{if $content->user} by {$content->user->display_name}{/if}</a>:</h3>
+    <h3 style="margin: 0;font-weight: 600;font-size: 16px;color: #444;">
+        Answer to <a href="{$content|url:'answer'}" style="color: #07c;text-decoration: underline;">{$content->question->title|striptags}</a>
+    </h3>
 
     <p style="margin: 1em 0;font-weight: 400;color: #444;">
         {$content->body|striptags|truncate:300}
@@ -10,12 +11,17 @@
             <td style="vertical-align: middle;">
                 <span>{$content->score} votes</span>
             </td>
-            <td n:inner-if="$content->question->user" style="vertical-align: middle;font-size: 12px;width: 170px;color: #777;">
-                Asked by <a href="{$content->question->user|url:'user'}" style="color: #418FA4;text-decoration: underline;">{$content->question->user->display_name}</a>
+            <td style="vertical-align: middle;font-size: 12px;width: 170px;color: #777;">
+                {if $content->question->user}
+                    Asked by <a href="{$content->question->user|url:'user'}" style="color: #07c;text-decoration: underline;">{$content->question->user->display_name}</a><br>
+                {/if}
+                {if $content->user}
+                    Answer by <a href="{$content->user|url:'user'}" style="color: #07c;text-decoration: underline;">{$content->user->display_name}</a><br>
+                {/if}
             </td>
             <td style="vertical-align: middle;width: 40px;text-align: right;">
-                <a href="{$content|feedbackUrl:'answer',1}" style="color: #418FA4;text-decoration: underline;"><img title="I liked this suggestion" alt="like" src="assets/like.png"></a>
-                <a href="{$content|feedbackUrl:'answer',-1}" style="color: #418FA4;text-decoration: underline;"><img title="I did not like this suggestion" alt="dislike" src="assets/dislike.png"></a>
+                <a href="{$content|feedbackUrl:'answer',1}" style="color: #07c;text-decoration: underline;"><img title="I liked this suggestion" alt="like" src="assets/like.png"></a>
+                <a href="{$content|feedbackUrl:'answer',-1}" style="color: #07c;text-decoration: underline;"><img title="I did not like this suggestion" alt="dislike" src="assets/dislike.png"></a>
             </td>
         </tr>
     </table>

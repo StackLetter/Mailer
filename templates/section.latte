@@ -1,18 +1,13 @@
-<div style="border-bottom: 2px solid #eee;padding-bottom: 35px;">
-    <table style="width: 100%; background:#eee;padding:10px 5px 5px 15px">
-        <tr>
-            <td>
-                <h2 style="font-weight: 400;font-size: 19px;margin: 0;color: #444;">{$section->name}</h2>
-                <p style="margin: 0;font-weight: 400;color: #444;font-style: italic;padding: 5px 0;">{$section->description}</p>
-            </td>
-            <td style="text-align: center;width: 100px;">
-                <span style="color: #444;font-size: 12px;display: block;padding-bottom: 5px;">Rate this section</span>
-                <a href="{$section|feedbackUrl:'section',-1}" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="-1" title="This section is irrelevant."></a>
-                <a href="{$section|feedbackUrl:'section',0}" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="0" title="This section is somewhat relevant."></a>
-                <a href="{$section|feedbackUrl:'section',1}" style="color: #418FA4;text-decoration: underline;"><img src="assets/star.png" alt="1" title="This section is great."></a>
-            </td>
-        </tr>
-    </table>
+<div style="border: 2px solid #eee;margin-bottom: 35px;">
+    <div style="background:#eee;padding:15px 20px 5px">
+        <h2 style="font-weight: 400;font-size: 19px;margin: 0;color: #000;">{$section->name}</h2>
+        <p style="margin: 0;font-weight: 400;color: #444;font-style: italic;padding: 0 0 5px;">{$section->description}</p>
+        <p style="margin: 0;font-weight: 400;color: #444;font-size: 11px;text-align: right;">Section feedback for next time:
+            <a title="See more of this section next time" href="{$section|feedbackUrl:'section',1}" style="color: #3a3;text-decoration: underline;">I want more</a> &middot;
+            <a title="See less of this section next time" href="{$section|feedbackUrl:'section',0}" style="color: #07c;text-decoration: underline;">I want less</a> &middot;
+            <a title="Completely remove this section next time" href="{$section|feedbackUrl:'section',-1}" style="color: #c55;text-decoration: underline;">Remove this</a>
+        </p>
+    </div>
     {foreach $section as $content}
         {include 'type-' . $section->content_type . '.latte', content => $content}
     {/foreach}
