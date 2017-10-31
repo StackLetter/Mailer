@@ -33,7 +33,7 @@ class ApiHelper{
     }
 
     public function getSectionContent(array $definition, $user_id, $frequency, $contentIds){
-        $duplicates = urlencode(json_encode($contentIds));
+        $duplicates = urlencode(json_encode(empty($contentIds) ? new \stdClass : $contentIds));
         return array_slice($this->getJson(sprintf($definition['content_endpoint'], $user_id, $frequency, $duplicates)), 0, $definition['limit']);
     }
 
