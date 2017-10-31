@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>StackLetter {$newsletter->site->name} {$newsletter->frequency} Newsletter ({date('d.m.Y')})</title>
+    <title>StackLetter {$newsletter->site->name} {$newsletter->frequency} Newsletter ({date('F j, Y')})</title>
 </head>
 <body>
     <div style="max-width: 600px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
@@ -12,6 +12,16 @@
                 <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0;">StackLetter &ndash; {$newsletter->site->name}</td>
             </tr>
         </table>
+        <div style="padding:10px 20px;color:#444;text-align: justify;">
+            <p style="margin:1em 0">
+                <a href="https://www.stackletter.com" style="color: #418FA4;text-decoration: underline;">StackLetter</a> is a research project at Slovak University of Technology.
+                Our goal is to provide you with personalized newsletters for Stack Exchange Network sites.
+            </p>
+            <p style="margin:1em 0">
+                You can help us make the personalization better by providing feedback on the relevance of the newsletter sections and
+                their contents by using the star ratings and like/dislike buttons.
+            </p>
+        </div>
         <div>
             {foreach $newsletter as $section}
                 {include 'section.latte', section => $section}
@@ -19,7 +29,7 @@
         </div>
         <div style="border-top: 3px solid #eee;padding: 5px 10px;">
             <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
-                <b>StackLetter</b> &ndash; Personalized Stack Exchange newsletters.
+                <b><a href="https://www.stackletter.com" style="color: #418FA4;text-decoration: underline;">StackLetter</a></b> &ndash; Personalized Stack Exchange newsletters.
                 | <a href="mailto:info@stackletter.com" style="color: #418FA4;text-decoration: underline;">info@stackletter.com</a>
             </p>
             <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
