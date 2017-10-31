@@ -32,8 +32,9 @@ class ApiHelper{
         return $this->getJson(sprintf($this->config['structure_endpoint'], $user_id, $frequency));
     }
 
-    public function getSectionContent(array $definition, $user_id, $frequency){
-        return array_slice($this->getJson(sprintf($definition['content_endpoint'], $user_id, $frequency)), 0, $definition['limit']);
+    public function getSectionContent(array $definition, $user_id, $frequency, $contentIds){
+        $duplicates = urlencode(json_encode($contentIds));
+        return array_slice($this->getJson(sprintf($definition['content_endpoint'], $user_id, $frequency, $duplicates)), 0, $definition['limit']);
     }
 
     public function getUnsubscribeLink($user_id){

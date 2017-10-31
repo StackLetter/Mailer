@@ -126,4 +126,14 @@ class Newsletter implements \IteratorAggregate{
         $db->commit();
     }
 
+    public function getContentIds(){
+        $ids = [];
+        foreach($this->sections as $section){
+            $key = $section->content_type;
+            $secIds = $section->getContentIds();
+            $ids[$key] = isset($ids[$key]) ? array_merge($ids[$key], $secIds) : $secIds;
+        }
+        return $ids;
+    }
+
 }

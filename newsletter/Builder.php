@@ -87,7 +87,7 @@ class Builder{
 
         // Fetch and add newsletter sections
         foreach($structure as $section){
-            $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency);
+            $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency, $newsletter->getContentIds());
             $newsletter->addSection($section)->setContentIds($contentIds);
         }
 

@@ -5,6 +5,13 @@ namespace Newsletter;
 use Neevo\Row;
 use Nette\SmartObject;
 
+/**
+ * @property-read string $content_type
+ * @property-read string $name
+ * @property-read string $description
+ * @property-read string $content_endpoint
+ * @property-read int $limit
+ */
 class NewsletterSection implements \IteratorAggregate {
     use SmartObject;
 
