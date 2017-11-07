@@ -11,7 +11,8 @@
             <td style="vertical-align: middle;">
                 <span>{$content->score} votes</span>
             </td>
-            <td style="vertical-align: middle;font-size: 12px;width: 170px;color: #777;">
+            <td style="vertical-align: middle;font-size: 12px;width: 150px;color: #777;">
+                {$content->creation_date|date:'M j, Y H:i'}<br>
                 {if $content->question->user}
                     Asked by <a href="{$content->question->user|url:'user'}" style="color: #07c;text-decoration: underline;">{$content->question->user->display_name}</a><br>
                 {/if}

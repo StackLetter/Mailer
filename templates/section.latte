@@ -1,13 +1,17 @@
 <div style="border: 2px solid #eee;margin-bottom: 35px;" n:if="!empty($section->getContentIds())">
-    <div style="background:#eee;padding:15px 20px 5px">
-        <h2 style="font-weight: 400;font-size: 19px;margin: 0;color: #000;">{$section->name}</h2>
-        <p style="margin: 0;font-weight: 400;color: #444;font-style: italic;padding: 0 0 5px;">{$section->description}</p>
-        <p style="margin: 0;font-weight: 400;color: #444;font-size: 11px;text-align: right;">Section feedback for next time:
-            <a title="See more of this section next time" href="{$section|feedbackUrl:'section',1}" style="color: #3a3;text-decoration: underline;">I want more</a> &middot;
-            <a title="See less of this section next time" href="{$section|feedbackUrl:'section',0}" style="color: #07c;text-decoration: underline;">I want less</a> &middot;
-            <a title="Completely remove this section next time" href="{$section|feedbackUrl:'section',-1}" style="color: #c55;text-decoration: underline;">Remove this</a>
-        </p>
-    </div>
+    <table style="background:#eee;padding:10px 0 5px;width: 100%">
+        <tr>
+            <td style="padding-left:15px">
+                <h2 style="font-weight: 400;font-size: 19px;margin: 0;color: #000;">{$section->name}</h2>
+                <p style="margin: 0;font-weight: 400;color: #444;font-style: italic;padding: 0 0 5px;">{$section->description}</p>
+            </td>
+            <td style="width:110px;font-size: 11px;padding-right:10px">
+                Section feedback<br>
+                <a title="See more of this section next time" href="{$section|feedbackUrl:'section',1}" style="color: #3a3;text-decoration: underline;">I want more next time</a><br>
+                <a title="See less of this section next time" href="{$section|feedbackUrl:'section',-1}" style="color: #07c;text-decoration: underline;">I want less next time</a>
+            </td>
+        </tr>
+    </table>
     {foreach $section as $content}
         {include 'type-' . $section->content_type . '.latte', content => $content}
     {/foreach}

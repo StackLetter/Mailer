@@ -5,11 +5,11 @@
     <title>[StackLetter] {$newsletter->site->name} &ndash; Your {$newsletter->frequency} Newsletter ({date('F j, Y')})</title>
 </head>
 <body>
-    <div style="max-width: 600px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
-        <table style="background: #418FA4 url(assets/header-bg.png) no-repeat 0 0;height: 90px;width: 100%;">
+    <div style="max-width: 750px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
+        <table style="background: #418FA4 url(assets/header-bg.png) repeat-y 0 0;height: 90px;width: 100%;">
             <tr>
                 <td><img src="assets/logo.png" alt="" height="75" style="vertical-align: middle;padding: 0 5px 0 20px;"></td>
-                <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0;">StackLetter &ndash; {$newsletter->site->name}</td>
+                <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0;">StackLetter<sup><small> Beta</small></sup> &ndash; {$newsletter->site->name}</td>
             </tr>
         </table>
         <div style="padding:10px 20px 0;color:#000;text-align: justify;">
@@ -37,7 +37,7 @@
                 | <a href="mailto:info@stackletter.com" style="color: #07c;text-decoration: underline;">info@stackletter.com</a>
             </p>
             <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
-                You received this e-mail because you subscribed to StackLetter {$newsletter->frequency} {$newsletter->site->name} newsletter.
+                You received this e-mail because you subscribed to StackLetter {$newsletter->frequency} {$newsletter->site->name} newsletter.<br>
                 <a href="{$newsletter->unsubscribeLink|unsubscribeUrl}" style="color: #07c;text-decoration: underline;">Unsubscribe</a> |
                 <a href="https://www.stackletter.com/?do=authorize" style="color: #07c;text-decoration: underline;">Manage subscriptions</a>.
             </p>
