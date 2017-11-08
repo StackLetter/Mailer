@@ -5,33 +5,30 @@
     <title>[StackLetter] {$newsletter->site->name} &ndash; Your {$newsletter->frequency} Newsletter ({date('F j, Y')})</title>
 </head>
 <body>
-    <div style="max-width: 750px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
-        <table style="background: #418FA4 url(assets/header-bg.png) repeat-y 0 0;height: 90px;width: 100%;">
-            <tr>
-                <td><img src="assets/logo.png" alt="" height="75" style="vertical-align: middle;padding: 0 5px 0 20px;"></td>
-                <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0;">StackLetter<sup><small> Beta</small></sup> &ndash; {$newsletter->site->name}</td>
-            </tr>
-        </table>
-        <div style="padding:10px 20px 0;color:#000;text-align: justify;">
-            <p style="margin:1em 0;font-style: italic;">
-                <a href="https://www.stackletter.com" style="color: #07c;text-decoration: underline;">StackLetter</a> is a research project at Slovak University of Technology.
-                Our goal is to provide you with personalized newsletters for Stack Exchange Network sites.
-            </p>
+    <div style="max-width: 800px;margin: 0 auto;font: 14px/1.4 arial, sans-serif;">
+        <div style="width:640px">
+            <table style="background: #418FA4 url(assets/header-bg.png) repeat-y 0 0;height: 90px;width: 100%;">
+                <tr>
+                    <td><img src="assets/logo.png" alt="" height="75" style="vertical-align: middle;padding: 0 5px 0 20px;"></td>
+                    <td style="color: #fff;font-size: 19px;font-weight: 600;padding: 0 5px 0 0;">StackLetter<sup><small> Beta</small></sup> &ndash; {$newsletter->site->name}</td>
+                </tr>
+            </table>
+            <div style="padding:10px 20px 0;color:#000;text-align: justify;">
+                <p style="margin:1em 0">
+                    <a href="https://www.stackletter.com" style="color: #07c;text-decoration: underline;">StackLetter</a> is a research project at Slovak University of Technology.
+                    Our goal is to provide you with personalized newsletters for Stack Exchange Network sites.
+                </p>
+                <p style="margin:1em 0;">
+                    The newsletter gets better and more relevant the more you use it. You can help us by providing feedback on the relevance of the newsletter content by using the like/dislike buttons.
+                </p>
+            </div>
         </div>
-        <div style="background:#D9EDF7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align: justify;">
-            <p style="margin:1em 0;">
-                The newsletter gets better and more relevant the more you use it. You can help us by providing feedback on the relevance of the newsletter content by using the like/dislike buttons.
-            </p>
-            <p style="margin:1em 0;">
-                You can also influence future newsletters by telling us if you want to see more or less of specific sections or remove them entirely.
-            </p>
-        </div>
-        <div>
-            {foreach $newsletter as $section}
-                {include 'section.latte', section => $section}
-            {/foreach}
-        </div>
-        <div style="border-top: 3px solid #eee;padding: 5px 10px;">
+
+        {foreach $newsletter as $section}
+            {include 'section.latte', section => $section}
+        {/foreach}
+
+        <div style="border-top: 3px solid #eee;padding: 5px 10px;width: 620px;margin-left: 2px;">
             <p style="color: #777;font-size: 10px;margin: .5em 0;text-align: center;">
                 <b><a href="https://www.stackletter.com" style="color: #07c;text-decoration: underline;">StackLetter</a></b> &ndash; Personalized Stack Exchange newsletters.
                 | <a href="mailto:info@stackletter.com" style="color: #07c;text-decoration: underline;">info@stackletter.com</a>
