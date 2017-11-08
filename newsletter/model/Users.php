@@ -27,4 +27,14 @@ class Users extends BaseModel{
                 ->where('frequency', $frequency)
             ->end();
     }
+
+
+    public function isActive($uid){
+        $tags = (int) $this->db->select('COUNT(*)', 'user_tags')->leftJoin('users', 'users.id = user_tags.user_id')->where('users.id', $uid)->fetchSingle();
+        if($tags > 0){
+            return true;
+        }
+        $questions = (int) $this->db->select('COUNT(*)', 'questions')->leftJoin('users', 'users.id = questions.owner_id')->where('users.id', $uid)->fetchSingle();
+        return $questions > 0;
+    }
 }

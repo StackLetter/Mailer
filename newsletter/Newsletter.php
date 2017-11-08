@@ -23,6 +23,7 @@ class Newsletter implements \IteratorAggregate{
     public $model;
 
     public $id;
+    public $userActive;
 
     /** @var Row */
     private $user;
@@ -53,8 +54,9 @@ class Newsletter implements \IteratorAggregate{
         return $this->user;
     }
 
-    public function setUser(Row $user){
+    public function setUser(Row $user, $userActive){
         $this->user = $user;
+        $this->userActive = $userActive;
         return $this;
     }
 

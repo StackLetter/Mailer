@@ -82,7 +82,7 @@ class Builder{
         $newsletter = new Newsletter($this->model);
         $newsletter
             ->setSite($site)
-            ->setUser($user)
+            ->setUser($user, $this->model->users->isActive($user->id))
             ->setFrequency($this->frequency)
             ->setUnsubscribeLink($this->api->getUnsubscribeLink($user->id));
 
