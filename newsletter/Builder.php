@@ -71,10 +71,11 @@ class Builder{
     }
 
     public function buildNewsletter(Row $user){
-        $this->logger->debug("Building newsletter for '$user->display_name' (site: $user->site_id)", ['user_id' => $user->id]);
+        $this->logger->info("Building newsletter for '$user->display_name' (site: $user->site_id)", ['user_id' => $user->id]);
         $site = $this->model->sites->get($user->site_id);
 
         // Fetch newsletter structure
+        $this->logger->debug("Fetching newsletter structure");
         $structure = $this->api->getNewsletterStructure($user->id, $this->frequency);
 
         // Create newsletter
@@ -87,21 +88,23 @@ class Builder{
 
         // Fetch and add newsletter sections
         foreach($structure as $section){
+            $this->logger->debug("Fetching newsletter section '$section[name]'");
             $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency, $newsletter->getContentIds());
             $newsletter->addSection($section)->setContentIds($contentIds);
         }
 
         // Populate newsletter sections with content from DB
-        $this->logger->debug("Populating newsletter content", ['user_id' => $user->id]);
+        $this->logger->info("Populating newsletter content", ['user_id' => $user->id]);
         $newsletter->populateContent();
 
         // Persist newsletter in DB
+        $this->logger->debug("Persisting newsletter");
         $newsletter->persist();
 
         // Render newsletter HTML
         $file = $this->renderer->renderNewsletter($newsletter);
 
-        $this->logger->debug("Rendered to: $file");
+        $this->logger->info("Rendered to: $file");
 
         // Add to mail queue
         $this->queue->enqueue([

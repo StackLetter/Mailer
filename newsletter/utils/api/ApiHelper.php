@@ -34,7 +34,8 @@ class ApiHelper{
 
     public function getSectionContent(array $definition, $user_id, $frequency, $contentIds){
         $duplicates = urlencode(json_encode(empty($contentIds) ? new \stdClass : $contentIds));
-        return array_slice($this->getJson(sprintf($definition['content_endpoint'], $user_id, $frequency, $duplicates)), 0, $definition['limit']);
+        $data = $this->getJson(sprintf($definition['content_endpoint'], $user_id, $frequency, $duplicates));
+        return !$data ? [] : array_slice($data, 0, $definition['limit']);
     }
 
     public function getUnsubscribeLink($user_id){
