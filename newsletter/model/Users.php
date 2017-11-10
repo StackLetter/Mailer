@@ -35,6 +35,10 @@ class Users extends BaseModel{
             return true;
         }
         $questions = (int) $this->db->select('COUNT(*)', 'questions')->leftJoin('users', 'users.id = questions.owner_id')->where('users.id', $uid)->fetchSingle();
-        return $questions > 0;
+        if($questions > 0){
+            return true;
+        }
+        $answers = (int) $this->db->select('COUNT(*)', 'answers')->leftJoin('users', 'users.id = answers.owner_id')->where('users.id', $uid)->fetchSingle();
+        return $answers > 0;
     }
 }
