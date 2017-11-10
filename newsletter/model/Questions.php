@@ -17,7 +17,13 @@ class Questions extends BaseModel{
         if($recurse){
             $question->tags = $this->model->tags->getQuestionTags($question->id);
             if($question->accepted_answer_id !== NULL){
-                $question->accepted_answer = $this->model->answers->get($question->accepted_answer_id, false);
+                $accepted =  $this->model->answers->get($question->accepted_answer_id, false);
+                if(!$accepted){
+                    $accepted = $this->model->answers->getByExternal($question->accepted_answer_id, $question->site_id, false);
+                }
+                if($accepted){
+                    $question->accepted_answer = $accepted;
+                }
             }
         }
         return $question;

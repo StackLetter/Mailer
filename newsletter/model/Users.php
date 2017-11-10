@@ -8,7 +8,7 @@ class Users extends BaseModel{
 
     public function get($id, $recurse = true){
         $user = parent::get($id);
-        if($recurse){
+        if($recurse && $user){
             $user->site = $this->model->sites->get($user->site_id);
         }
         return $user;
