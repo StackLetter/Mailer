@@ -82,12 +82,12 @@ class Mailer{
         $this->mailer->send($mail);
 
         // Remove rendered file
-        @unlink($file);
+        //@unlink($file);
 
         // Remove empty dir
-        if(!(new \FilesystemIterator(dirname($file)))->valid()){
-            @rmdir(dirname($file));
-        }
+        //if(!(new \FilesystemIterator(dirname($file)))->valid()){
+            //@rmdir(dirname($file));
+        //}
         return true;
     }
 
