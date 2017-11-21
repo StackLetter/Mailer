@@ -63,10 +63,10 @@ class Mailer{
         }
         $html = file_get_contents($file);
 
-        $mail = new CustomMessage();
+        $mail = new Message();
         $mail->setFrom($this->config['sender'])
             ->addTo($params['email'])
-            ->setHtmlBody($html, $this->templateDir);
+            ->setHtmlBody($html);
 
         if(isset($this->config['xmailer'])){
             $mail->setHeader('X-Mailer', $this->config['xmailer']);

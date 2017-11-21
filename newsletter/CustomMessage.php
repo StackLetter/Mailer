@@ -20,6 +20,7 @@ class CustomMessage extends Message{
 					|<[^<>]+\s style\s*=\s* ["\'][^"\'>]+[:\s] url\(
 					|<style[^>]*>[^<]+ [:\s] url\()
 					(["\']?)(?![a-z]+:|[/\\#])([^"\'>)\s]+)
+					|\[\[ ([\w()+./@~-]+) \]\]
 				#ix',
                 PREG_OFFSET_CAPTURE
             );
