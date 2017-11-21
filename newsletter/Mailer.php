@@ -63,7 +63,7 @@ class Mailer{
         }
         $html = file_get_contents($file);
 
-        $mail = new Message();
+        $mail = new CustomMessage();
         $mail->setFrom($this->config['sender'])
             ->addTo($params['email'])
             ->setHtmlBody($html, $this->templateDir);
