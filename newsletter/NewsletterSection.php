@@ -16,13 +16,13 @@ class NewsletterSection implements \IteratorAggregate {
     use SmartObject;
 
     /** @var Newsletter */
-    private $newsletter;
+    protected $newsletter;
 
-    private $definition;
-    private $contentIds;
+    protected $definition;
+    protected $contentIds;
 
     /** @var Row[] */
-    private $content = [];
+    protected $content = [];
 
     public $id;
 
@@ -35,7 +35,7 @@ class NewsletterSection implements \IteratorAggregate {
         return $this->contentIds;
     }
 
-    public function setContentIds(array $ids){
+    public function setContentIds($ids){
         $this->contentIds = $ids;
     }
 

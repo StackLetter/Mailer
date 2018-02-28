@@ -90,7 +90,7 @@ class Builder{
         foreach($structure as $section){
             $this->logger->debug("Fetching newsletter section '$section[name]'");
             $contentIds = $this->api->getSectionContent($section, $user->id, $this->frequency, $newsletter->getContentIds());
-            $newsletter->addSection($section)->setContentIds($contentIds);
+            $newsletter->addSection($section, $section['custom'] ?? false)->setContentIds($contentIds);
         }
 
         // Populate newsletter sections with content from DB

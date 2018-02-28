@@ -61,8 +61,7 @@ class Renderer{
 
     public function filterUrl($entity, $type, $evaluation = true){
         $site = $this->newsletter->site;
-        // TODO: remove fallback to SE when DB is populated with URLs
-        $baseUrl = isset($site->url) ? rtrim($site->url, '/') : 'https://softwareengineering.stackexchange.com';
+        $baseUrl = rtrim($site->url, '/');
 
         // TODO: add more entity types (badge, user_badge, comment)
         switch($type){
@@ -74,6 +73,8 @@ class Renderer{
                 $res = "$baseUrl/u/$entity->external_id"; break;
             case 'tag':
                 $res = "$baseUrl/questions/tagged/$entity->name"; break;
+            case 'badge':
+                $res = "$baseUrl/help/badges/$entity->external_id"; break;
             default:
                 $res = '#';
         }

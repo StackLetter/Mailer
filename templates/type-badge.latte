@@ -1,0 +1,32 @@
+<tr>
+    <td style="border-top: 1px dotted #ccc;padding: 20px 20px 10px;font-size: 13px;margin: 0;width:596px;border-left:2px solid #eee;border-right:2px solid #eee{if $isLast};border-bottom:2px solid #eee{/if}">
+        {if !empty($content->congrats)}
+            <h3 style="margin: 0 0 10px;font-weight: 600;font-size: 15px;">Congratulations! You have been awarded these badges:</h3>
+            <table style="border-collapse:collapse;" n:inner-foreach="$content->congrats as $badge">
+                <tr>
+                    <td style="{if !$iterator->last}border-bottom: 1px solid #eee;{/if};padding:5px 0 5px 10px;width:120px">
+                        <a href="{$badge|url:'badge'}" style="font-size: 12px;display:inline-block;color: #fff;text-decoration: none;background: #2f3337;padding: 3px 8px 3px 5px;border-radius:3px" title="{$badge->rank} badge: {$badge->description|striptags|noescape}.">
+                            {var $color = $badge->rank == 'gold' ? 'fc0' : ($badge->rank == 'silver' ? 'b4b8bc' : 'd1a684')}
+                            <span style="display:inline-block;width:7px;height:7px;background:#{$color};border-radius:50%;margin:0 3px;"></span>
+                            {$badge->name}
+                        </a>
+                    </td>
+                    <td style="{if !$iterator->last}border-bottom: 1px solid #eee;{/if}font-size:12px;padding:5px 10px 5px 0;color:#333">
+                        {$badge->description|striptags|noescape}.
+                    </td>
+                </tr>
+            </table>
+        {/if}
+        {if !empty($content->new)}
+            <h3 style="margin: 15px 0 10px;font-weight: 600;font-size: 15px;">New badges on the site:</h3>
+            <p style="margin:1em 0;font-size: 12px;line-height:17px" n:inner-foreach="$content->new as $badge">
+                <a href="{$badge|url:'badge'}" style="display:inline-block;margin:0 3px 3px 0;color: #fff;text-decoration: none;background: #2f3337;padding: 3px 8px 3px 5px;border-radius:3px;" title="{$badge->rank} badge: {$badge->description|striptags|noescape}.">
+                    {var $color = $badge->rank == 'gold' ? 'fc0' : ($badge->rank == 'silver' ? 'b4b8bc' : 'd1a684')}
+                    <span style="display:inline-block;width:7px;height:7px;background:#{$color};border-radius:50%;margin:0 3px;position:relative;top:-1px"></span>
+                    {$badge->name}
+                </a>
+            </p>
+        {/if}
+    </td>
+    <td style="padding-left:20px;font-size: 11px;vertical-align: bottom;padding-bottom: 10px;color:#fff">Section feedback</td>
+</tr>

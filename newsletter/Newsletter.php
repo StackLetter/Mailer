@@ -78,8 +78,14 @@ class Newsletter implements \IteratorAggregate{
         return $this;
     }
 
-    public function addSection($section){
-        $new = new NewsletterSection($this, $section);
+    public function addSection($section, $custom = false){
+        if($custom){
+            $prefix = ucfirst($section['content_type']);
+            $class_name = "Newsletter\\".$prefix."NewsletterSection";
+        } else{
+            $class_name = "Newsletter\\NewsletterSection";
+        }
+        $new = new $class_name($this, $section);
         $this->sections[] = $new;
         return $new;
     }
@@ -90,8 +96,12 @@ class Newsletter implements \IteratorAggregate{
 
     public function populateContent(){
         foreach($this->sections as $section){
-            foreach($section->getContentIds() as $id){
-                $section->addContent($this->model->{$section->content_type . 's'}->get($id));
+            if($section instanceof CustomNewsletterSection){
+                $section->populate($this->model);
+            } else{
+                foreach($section->getContentIds() as $id){
+                    $section->addContent($this->model->{$section->content_type . 's'}->get($id));
+                }
             }
         }
     }

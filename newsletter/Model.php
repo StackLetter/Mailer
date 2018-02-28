@@ -8,6 +8,7 @@ use Newsletter\Model\Questions;
 use Newsletter\Model\Users;
 use Newsletter\Model\Tags;
 use Newsletter\Model\Sites;
+use Newsletter\Model\Badges;
 
 /**
  * @property-read Users $users
@@ -15,6 +16,7 @@ use Newsletter\Model\Sites;
  * @property-read Answers $answers
  * @property-read Tags $tags
  * @property-read Sites $sites
+ * @property-read Badges $badges
  */
 class Model {
 
