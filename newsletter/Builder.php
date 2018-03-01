@@ -78,6 +78,11 @@ class Builder{
         $this->logger->debug("Fetching newsletter structure");
         $structure = $this->api->getNewsletterStructure($user->id, $this->frequency);
 
+        if(!$structure){
+            $this->logger->error("No newsletter structure returned.");
+            return;
+        }
+
         // Create newsletter
         $newsletter = new Newsletter($this->model);
         $newsletter
