@@ -5,6 +5,7 @@ namespace Newsletter;
 use Kdyby\Monolog\Logger as KdybyLogger;
 use Nette\Mail\IMailer;
 use Nette\Mail\Message;
+use Nette\Mail\SmtpException;
 use Nette\SmartObject;
 use Newsletter\Utils\Redis\RedisQueue;
 use Psr\Log\LoggerInterface;
@@ -48,7 +49,7 @@ class Mailer{
     }
 
 
-    public function sendNewsletter($params){
+    public function sendNewsletter($params, $repeat = true){
         if(!isset($this->config['sender'])){
             throw new \RuntimeException("No sender email specified. Specify sender email in config/local.neon");
         }
@@ -79,15 +80,27 @@ class Mailer{
             $mail->setHeader('List-Unsubscribe', "<$params[unsubscribe]>");
         }
 
-        $this->mailer->send($mail);
+        try{
+            $this->mailer->send($mail);
+        } catch(SmtpException $e){
+            // If failed, try again in a few seconds
+            if($repeat){
+                $this->logger->error('Error sending mail, trying again in a few seconds...');
+                sleep(10);
+                return $this->sendNewsletter($params, false);
+            } else{
+                $this->logger->error('Could not send mail; newsletter_id=' . $params['newsletter_id'] ?? 'unknown');
+                return false;
+            }
+        }
 
         // Remove rendered file
-        //@unlink($file);
+        @unlink($file);
 
         // Remove empty dir
-        //if(!(new \FilesystemIterator(dirname($file)))->valid()){
-            //@rmdir(dirname($file));
-        //}
+        if(!(new \FilesystemIterator(dirname($file)))->valid()){
+            @rmdir(dirname($file));
+        }
         return true;
     }
 
