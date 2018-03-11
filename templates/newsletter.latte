@@ -22,16 +22,16 @@
                     The newsletter gets better and more relevant the more you use it. You can help us by providing feedback on the relevance of the newsletter content by using the like/dislike buttons.
                 </p>
             </div>
-            <div n:if="!$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
+            {*<div n:if="!$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
                 <p style="margin:1em 0;">
                     You have no activity on the {$newsletter->site->name} site. Please use the section and content feedback to tell us what you want to see.
                 </p>
-            </div>
-            <div n:if="$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
+            </div>*}
+            {*<div n:if="$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
                 <p style="margin:1em 0;">
                     We are currently in a very early prototype stage. The newsletter will get better and more relevant as time goes on.
                 </p>
-            </div>
+            </div>*}
         </div>
 
         {foreach $newsletter as $section}
