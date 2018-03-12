@@ -3,6 +3,7 @@
 namespace Newsletter;
 
 use Kdyby\Monolog\Logger as KdybyLogger;
+use Nette\FileNotFoundException;
 use Nette\Mail\IMailer;
 use Nette\Mail\Message;
 use Nette\Mail\SmtpException;
@@ -66,8 +67,13 @@ class Mailer{
 
         $mail = new Message();
         $mail->setFrom($this->config['sender'])
-            ->addTo($params['email'])
-            ->setHtmlBody($html);
+            ->addTo($params['email']);
+
+        try{
+            $mail->setHtmlBody($html, $this->templateDir);
+        } catch(FileNotFoundException $e){
+            $mail->setHtmlBody($html);
+        }
 
         if(isset($this->config['xmailer'])){
             $mail->setHeader('X-Mailer', $this->config['xmailer']);
