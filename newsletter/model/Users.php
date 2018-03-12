@@ -47,6 +47,6 @@ class Users extends BaseModel{
             return false;
         }
         $row = $driver->fetch($resource);
-        return $row === false ? false : ((bool) $row['total'] ?? false);
+        return $row === false ? false : (($row['total'] ?? 0) >= 5);
     }
 }
