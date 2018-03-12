@@ -124,9 +124,13 @@ class Mailer{
 
     public function processJob($job, $params){
         if(isset($this->jobProcessors[$job])){
-            $this->logger->debug("Processing job $job... ");
+            $this->logger->debug("Processing job $job... ", [
+                'newsletter_id' => $params['newsletter_id'] ?? 'no-ID',
+                'email' => $params['email'] ?? '<unknown>',
+            ]);
             $res = call_user_func($this->jobProcessors[$job], $params);
             $this->logger->debug("Done (" . ($res ? 'OK' : 'FAIL') . ")");
+            return $res;
         } else{
             return false;
         }
