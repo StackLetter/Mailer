@@ -30,15 +30,23 @@ class Users extends BaseModel{
 
 
     public function isActive($uid){
-        $tags = (int) $this->db->select('COUNT(*)', 'user_tags')->leftJoin('users', 'users.id = user_tags.user_id')->where('users.id', $uid)->fetchSingle();
-        if($tags > 0){
-            return true;
+        $driver = $this->db->getConnection()->getDriver();
+        $resource = $driver->runQuery("
+        SELECT SUM(cnt) as total FROM (
+            WITH the_user AS (SELECT " . (int) $uid . " as id)
+            SELECT COUNT(*) as cnt FROM questions WHERE owner_id IN (SELECT id FROM the_user) UNION
+            SELECT COUNT(*) AS cnt FROM answers WHERE owner_id IN (SELECT id FROM the_user) UNION
+            SELECT COUNT(*) AS cnt FROM comments WHERE owner_id IN (SELECT id FROM the_user) UNION
+            SELECT COUNT(*) AS cnt FROM user_favorites WHERE user_id IN (SELECT id FROM the_user) UNION
+            SELECT COUNT(*) AS cnt FROM evaluation_newsletters e
+            LEFT JOIN newsletters n ON n.id = e.newsletter_id
+            WHERE e.content_type IN ('question', 'answer') AND e.user_response_type IN ('click', 'feedback')
+            AND n.user_id IN (SELECT id FROM the_user)
+            ) united");
+        if(!$resource){
+            return false;
         }
-        $questions = (int) $this->db->select('COUNT(*)', 'questions')->leftJoin('users', 'users.id = questions.owner_id')->where('users.id', $uid)->fetchSingle();
-        if($questions > 0){
-            return true;
-        }
-        $answers = (int) $this->db->select('COUNT(*)', 'answers')->leftJoin('users', 'users.id = answers.owner_id')->where('users.id', $uid)->fetchSingle();
-        return $answers > 0;
+        $row = $driver->fetch($resource);
+        return $row === false ? false : ((bool) $row['total'] ?? false);
     }
 }
