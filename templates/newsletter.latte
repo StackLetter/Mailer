@@ -23,14 +23,14 @@
                 </p>
             </div>
             <div n:if="!$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
-                <p style="margin:1em 0;">
-                    You don't have enough activity on the {$newsletter->site->name} site for us to learn your preferences.
+                <p style="margin:1em 0 .5em;">
+                    You don't have enough activity on the {$newsletter->site->name} site for us to learn your preferences.<br>
                     You can help us know what you like by:
                 </p>
-                <p style="margin:1em 0;">
-                    <strong>1)</strong> Being more active: asking questions, answering and commenting<br>
-                    <strong>2)</strong> Marking some questions on the site as a favorite<br>
-                    <strong>3)</strong> Clicking on content in this newsletter or using the feedback links
+                <p style="margin:.5em 0 1em 1em;">
+                    <strong>1)</strong> Being more active: asking questions, answering and commenting.<br>
+                    <strong>2)</strong> Marking some questions on the site as a favorite.<br>
+                    <strong>3)</strong> Clicking on content in this newsletter or using the feedback links.
                 </p>
             </div>
             {*<div n:if="$newsletter->userActive" style="background:#d9edf7;color:#31708f;border:1px solid #bce8f1;margin:0 0 20px 0;padding:0 20px;text-align:justify">
