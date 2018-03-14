@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "013c9bba03ba02545fe9d860f12e83ed",
-    "content-hash": "ca33994be83244dc3594ea47eb25b6eb",
+    "hash": "67ec9fc78a9264e3f5446702842bbff0",
+    "content-hash": "3688393e6183e7203dc25aff07a11391",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -1336,6 +1336,59 @@
             "time": "2017-08-20 17:32:29"
         },
         {
+            "name": "nextras/tracy-monolog-adapter",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextras/tracy-monolog-adapter.git",
+                "reference": "fb5d9b57890eb5605f3bdbac0d77a95f04ebff98"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextras/tracy-monolog-adapter/zipball/fb5d9b57890eb5605f3bdbac0d77a95f04ebff98",
+                "reference": "fb5d9b57890eb5605f3bdbac0d77a95f04ebff98",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "~1.9",
+                "php": ">=7.0",
+                "tracy/tracy": "~2.3"
+            },
+            "require-dev": {
+                "nette/di": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nextras\\TracyMonologAdapter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nextras Project",
+                    "homepage": "https://github.com/nextras/tracy-monolog-adapter/graphs/contributors"
+                }
+            ],
+            "description": "Nextras Tracy-Monolog Adapter",
+            "homepage": "https://github.com/nextras/tracy-monolog-adapter",
+            "keywords": [
+                "logger",
+                "monolog",
+                "nette",
+                "nextras"
+            ],
+            "time": "2016-05-25 16:14:56"
+        },
+        {
             "name": "predis/predis",
             "version": "v1.1.1",
             "source": {
@@ -1481,6 +1534,66 @@
                 "psr-3"
             ],
             "time": "2016-10-10 12:19:37"
+        },
+        {
+            "name": "rollbar/rollbar",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollbar/rollbar-php.git",
+                "reference": "9a626a08a1293b2ad648521a0b4285b13b28fe23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php/zipball/9a626a08a1293b2ad648521a0b4285b13b28fe23",
+                "reference": "9a626a08a1293b2ad648521a0b4285b13b28fe23",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "monolog/monolog": "*",
+                "psr/log": "^1.0.1"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "mockery/mockery": "0.9.*",
+                "monolog/monolog": "^1.12.0",
+                "packfire/php5.3-compat": "*",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "4.8.*",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "suggest": {
+                "fluent/logger": "Needed to use the 'fluent' handler for fluentd support",
+                "packfire/php5.3-compat": "for backward compatibility with PHP 5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rollbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rollbar, Inc.",
+                    "email": "support@rollbar.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Monitors errors and exceptions and reports them to Rollbar",
+            "homepage": "http://github.com/rollbar/rollbar-php",
+            "keywords": [
+                "debugging",
+                "errors",
+                "exceptions",
+                "logging",
+                "monitoring"
+            ],
+            "time": "2018-02-06 06:19:04"
         },
         {
             "name": "smasty/neevo",
