@@ -10,6 +10,7 @@ use Nette\SmartObject;
  * @property-read string $name
  * @property-read string $description
  * @property-read string $content_endpoint
+ * @property-read string $section_id
  * @property-read int $limit
  */
 class NewsletterSection implements \IteratorAggregate {

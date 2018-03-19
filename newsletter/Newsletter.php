@@ -128,6 +128,7 @@ class Newsletter implements \IteratorAggregate{
                     'content_ids' => "{" . join(',', $sec->getContentIds()) . "}",
                     'created_at' => new Literal('NOW()'),
                     'updated_at' => new Literal('NOW()'),
+                    'section_id' => $sec->section_id,
                 ])->insertId();
             }
         } catch(NeevoException $e){
